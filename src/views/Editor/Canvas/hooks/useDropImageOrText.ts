@@ -4,6 +4,7 @@ import { useMainStore } from '@/store'
 import { getImageDataURL } from '@/utils/image'
 import { parseText2Paragraphs } from '@/utils/textParser'
 import useCreateElement from '@/hooks/useCreateElement'
+import { __v_store__ } from '@/main'
 
 export default (elementRef: Ref<HTMLElement | undefined>) => {
   const { disableHotkeys } = storeToRefs(useMainStore())
@@ -39,17 +40,17 @@ export default (elementRef: Ref<HTMLElement | undefined>) => {
   onMounted(() => {
     elementRef.value && elementRef.value.addEventListener('drop', handleDrop)
 
-    document.ondragleave = e => e.preventDefault()
-    document.ondrop = e => e.preventDefault()
-    document.ondragenter = e => e.preventDefault()
-    document.ondragover = e => e.preventDefault()
+    __v_store__.value!.root.ondragleave = e => e.preventDefault()
+    __v_store__.value!.root.ondrop = e => e.preventDefault()
+    __v_store__.value!.root.ondragenter = e => e.preventDefault()
+    __v_store__.value!.root.ondragover = e => e.preventDefault()
   })
   onUnmounted(() => {
     elementRef.value && elementRef.value.removeEventListener('drop', handleDrop)
 
-    document.ondragleave = null
-    document.ondrop = null
-    document.ondragenter = null
-    document.ondragover = null
+    __v_store__.value!.root.ondragleave = null
+    __v_store__.value!.root.ondrop = null
+    __v_store__.value!.root.ondragenter = null
+    __v_store__.value!.root.ondragover = null
   })
 }

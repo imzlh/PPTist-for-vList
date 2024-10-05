@@ -21,6 +21,7 @@ import { computed, onUnmounted, ref } from 'vue'
 
 import Checkboard from './Checkboard.vue'
 import type { ColorFormats } from 'tinycolor2'
+import { __v_store__ } from '@/main';
 
 const props = defineProps<{
   value: ColorFormats.RGBA
@@ -42,7 +43,7 @@ const handleChange = (e: MouseEvent) => {
   e.preventDefault()
   if (!alphaRef.value) return
   const containerWidth = alphaRef.value.clientWidth
-  const xOffset = alphaRef.value.getBoundingClientRect().left + window.pageXOffset
+  const xOffset = alphaRef.value.getBoundingClientRect().left + __v_store__.value!.root.scrollLeft
   const left = e.pageX - xOffset
   let a
 
@@ -61,13 +62,13 @@ const handleChange = (e: MouseEvent) => {
 }
 
 const unbindEventListeners = () => {
-  window.removeEventListener('mousemove', handleChange)
-  window.removeEventListener('mouseup', unbindEventListeners)
+  __v_store__.value!.root.removeEventListener('mousemove', handleChange)
+  __v_store__.value!.root.removeEventListener('mouseup', unbindEventListeners)
 }
 const handleMouseDown = (e: MouseEvent) => {
   handleChange(e)
-  window.addEventListener('mousemove', handleChange)
-  window.addEventListener('mouseup', unbindEventListeners)
+  __v_store__.value!.root.addEventListener('mousemove', handleChange)
+  __v_store__.value!.root.addEventListener('mouseup', unbindEventListeners)
 }
 onUnmounted(unbindEventListeners)
 </script>

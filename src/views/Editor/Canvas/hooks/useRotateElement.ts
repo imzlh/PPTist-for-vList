@@ -2,6 +2,7 @@ import type { Ref } from 'vue'
 import { useSlidesStore } from '@/store'
 import type { PPTElement, PPTLineElement, PPTVideoElement, PPTAudioElement, PPTChartElement } from '@/types/slides'
 import useHistorySnapshot from '@/hooks/useHistorySnapshot'
+import { __v_store__ } from '@/main'
 
 /**
  * 计算给定坐标到原点连线的弧度
@@ -75,8 +76,8 @@ export default (
 
     const handleMouseup = () => {
       isMouseDown = false
-      document.onmousemove = null
-      document.onmouseup = null
+      __v_store__.value!.root.onmousemove = null
+      __v_store__.value!.root.onmouseup = null
 
       if (elOriginRotate === angle) return
 
@@ -85,12 +86,12 @@ export default (
     }
 
     if (isTouchEvent) {
-      document.ontouchmove = handleMousemove
-      document.ontouchend = handleMouseup
+      __v_store__.value!.root.ontouchmove = handleMousemove
+      __v_store__.value!.root.ontouchend = handleMouseup
     }
     else {
-      document.onmousemove = handleMousemove
-      document.onmouseup = handleMouseup
+      __v_store__.value!.root.onmousemove = handleMousemove
+      __v_store__.value!.root.onmouseup = handleMouseup
     }
   }
 

@@ -46,8 +46,9 @@
       }
     </style>
     <script type="module"  defer>
-      import render from './src/main.ts';
-      render(document.body);
+      import render, { __v_store__ } from './src/main.ts';
+      __v_store__.value = { root: document.body, shadow: document };
+      render();
     </script>
   </head>
   <body>

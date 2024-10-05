@@ -29,6 +29,7 @@
 </template>
 
 <script lang="ts" setup>
+import { __v_store__ } from '@/main';
 import { computed, onMounted, ref } from 'vue'
 
 const props = withDefaults(defineProps<{
@@ -73,10 +74,10 @@ const realHeight = computed(() => {
 
 onMounted(() => {
   if (props.left >= 0) x.value = props.left
-  else x.value = document.body.clientWidth + props.left - props.width
+  else x.value = __v_store__.value!.root.clientWidth + props.left - props.width
 
   if (props.top >= 0) y.value = props.top
-  else y.value = document.body.clientHeight + props.top - realHeight.value
+  else y.value = __v_store__.value!.root.clientHeight + props.top - realHeight.value
 
   w.value = props.width
   h.value = props.height
@@ -87,8 +88,8 @@ const startMove = (e: MouseEvent) => {
 
   let isMouseDown = true
 
-  const windowWidth = document.body.clientWidth
-  const clientHeight = document.body.clientHeight
+  const windowWidth = __v_store__.value!.root.clientWidth
+  const clientHeight = __v_store__.value!.root.clientHeight
 
   const startPageX = e.pageX
   const startPageY = e.pageY
@@ -96,7 +97,7 @@ const startMove = (e: MouseEvent) => {
   const originLeft = x.value
   const originTop = y.value
 
-  document.onmousemove = e => {
+  __v_store__.value!.root.onmousemove = e => {
     if (!isMouseDown) return
 
     const moveX = e.pageX - startPageX
@@ -113,11 +114,11 @@ const startMove = (e: MouseEvent) => {
     x.value = left
     y.value = top
   }
-  document.onmouseup = () => {
+  __v_store__.value!.root.onmouseup = () => {
     isMouseDown = false
 
-    document.onmousemove = null
-    document.onmouseup = null
+    __v_store__.value!.root.onmousemove = null
+    __v_store__.value!.root.onmouseup = null
   }
 }
 
@@ -132,7 +133,7 @@ const startResize = (e: MouseEvent) => {
   const originWidth = w.value
   const originHeight = h.value
 
-  document.onmousemove = e => {
+  __v_store__.value!.root.onmousemove = e => {
     if (!isMouseDown) return
 
     const moveX = e.pageX - startPageX
@@ -149,11 +150,11 @@ const startResize = (e: MouseEvent) => {
     w.value = width
     h.value = height
   }
-  document.onmouseup = () => {
+  __v_store__.value!.root.onmouseup = () => {
     isMouseDown = false
 
-    document.onmousemove = null
-    document.onmouseup = null
+    __v_store__.value!.root.onmousemove = null
+    __v_store__.value!.root.onmouseup = null
   }
 }
 </script>

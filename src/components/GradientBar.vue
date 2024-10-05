@@ -16,6 +16,7 @@
 </template>
 
 <script lang="ts" setup>
+import { __v_store__ } from '@/main';
 import type { GradientColor } from '@/types/slides'
 import { ref, computed, watchEffect, watch } from 'vue'
 
@@ -64,7 +65,7 @@ const removePoint = (index: number) => {
 const movePoint = (index: number) => {
   let isMouseDown = true
 
-  document.onmousemove = e => {
+  __v_store__.value!.root.onmousemove = e => {
     if (!isMouseDown) return
     if (!barRef.value) return
 
@@ -77,7 +78,7 @@ const movePoint = (index: number) => {
       return item
     })
   }
-  document.onmouseup = () => {
+  __v_store__.value!.root.onmouseup = () => {
     isMouseDown = false
 
     const point = points.value[index]
@@ -94,8 +95,8 @@ const movePoint = (index: number) => {
 
     emit('update:value', _points)
     
-    document.onmousemove = null
-    document.onmouseup = null
+    __v_store__.value!.root.onmousemove = null
+    __v_store__.value!.root.onmouseup = null
   }
 }
 

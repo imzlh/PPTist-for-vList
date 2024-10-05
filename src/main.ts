@@ -1,4 +1,4 @@
-import { createApp, shallowRef, watch } from 'vue'
+import { createApp, shallowRef } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 
@@ -14,12 +14,12 @@ import Directive from '@/plugins/directive'
 import type { vFile } from './vlist'
 import useImport from './hooks/useImport'
 
-export default async function(element: HTMLElement){
+export default async function(){
     const app = createApp(App)
     app.use(Icon)
     app.use(Directive)
     app.use(createPinia())
-    app.mount(element);
+    app.mount(__v_store__.value!.root);
 
     const { importPPTXFile } = useImport();
     const dat = await (await fetch(__v_store__.value!.file.url)).blob() as File,
@@ -31,5 +31,7 @@ export default async function(element: HTMLElement){
 
 export const __v_store__ = shallowRef<{
     dir: string,
-    file: vFile
+    file: vFile,
+    root: HTMLDivElement,
+    shadow: ShadowRoot
 }>()

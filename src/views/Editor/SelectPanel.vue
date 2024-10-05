@@ -89,6 +89,7 @@ import { ElementOrderCommands } from '@/types/edit'
 
 import MoveablePanel from '@/components/MoveablePanel.vue'
 import Button from '@/components/Button.vue'
+import { __v_store__ } from '@/main'
 
 const slidesStore = useSlidesStore()
 const mainStore = useMainStore()
@@ -145,7 +146,7 @@ const saveElementName = (e: FocusEvent | KeyboardEvent, id: string) => {
 const enterEdit = (id: string) => {
   editingElId.value = id
   nextTick(() => {
-    const inputRef = document.querySelector(`#select-panel-input-${id}`) as HTMLInputElement
+    const inputRef = __v_store__.value!.root.querySelector(`#select-panel-input-${id}`) as HTMLInputElement
     inputRef.focus()
   })
 }

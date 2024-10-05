@@ -4,6 +4,7 @@ import { useMainStore } from '@/store'
 import { getImageDataURL } from '@/utils/image'
 import usePasteTextClipboardData from './usePasteTextClipboardData'
 import useCreateElement from './useCreateElement'
+import { __v_store__ } from '@/main'
 
 export default () => {
   const { editorAreaFocus, thumbnailsFocus, disableHotkeys } = storeToRefs(useMainStore())
@@ -47,9 +48,9 @@ export default () => {
   }
 
   onMounted(() => {
-    document.addEventListener('paste', pasteListener)
+    __v_store__.value!.root.addEventListener('paste', pasteListener)
   })
   onUnmounted(() => {
-    document.removeEventListener('paste', pasteListener)
+    __v_store__.value!.root.removeEventListener('paste', pasteListener)
   })
 }

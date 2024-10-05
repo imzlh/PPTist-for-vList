@@ -4,6 +4,7 @@ import { useKeyboardStore, useMainStore, useSlidesStore } from '@/store'
 import type { PPTElement, PPTLineElement } from '@/types/slides'
 import { OperateLineHandlers } from '@/types/edit'
 import useHistorySnapshot from '@/hooks/useHistorySnapshot'
+import { __v_store__ } from '@/main'
 
 interface AdsorptionPoint {
   x: number
@@ -64,7 +65,7 @@ export default (elementList: Ref<PPTElement[]>) => {
       )
     }
 
-    document.onmousemove = e => {
+    __v_store__.value!.root.onmousemove = e => {
       if (!isMouseDown) return
 
       const currentPageX = e.pageX
@@ -211,10 +212,10 @@ export default (elementList: Ref<PPTElement[]>) => {
       })
     }
 
-    document.onmouseup = e => {
+    __v_store__.value!.root.onmouseup = e => {
       isMouseDown = false
-      document.onmousemove = null
-      document.onmouseup = null
+      __v_store__.value!.root.onmousemove = null
+      __v_store__.value!.root.onmouseup = null
 
       const currentPageX = e.pageX
       const currentPageY = e.pageY

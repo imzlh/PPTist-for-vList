@@ -7,6 +7,7 @@ import { type ShapePoolItem, SHAPE_PATH_FORMULAS } from '@/configs/shapes'
 import type { LinePoolItem } from '@/configs/lines'
 import { CHART_DEFAULT_DATA } from '@/configs/chart'
 import useHistorySnapshot from '@/hooks/useHistorySnapshot'
+import { __v_store__ } from '@/main'
 
 interface CommonElementPosition {
   top: number
@@ -180,7 +181,7 @@ export default () => {
       vertical,
     }, () => {
       setTimeout(() => {
-        const editorRef: HTMLElement | null = document.querySelector(`#editable-element-${id} .ProseMirror`)
+        const editorRef: HTMLElement | null = __v_store__.value!.root.querySelector(`#editable-element-${id} .ProseMirror`)
         if (editorRef) editorRef.focus()
       }, 0)
     })

@@ -1,5 +1,6 @@
 import { createVNode, render, type AppContext } from 'vue'
 import MessageComponent from '@/components/Message.vue'
+import { __v_store__ } from '@/main'
 
 export interface MessageOptions {
   type?: 'info' | 'success' | 'warning' | 'error'
@@ -61,7 +62,7 @@ const message: Message = (options: MessageOptions) => {
       transition: all 1s ease-in-out;
       align-items: center;
     `
-    document.body.appendChild(wrap)
+    __v_store__.value!.root.appendChild(wrap)
   }
 
   const vm = createVNode(MessageComponent, props, null)

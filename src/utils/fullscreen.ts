@@ -1,6 +1,8 @@
+import { __v_store__ } from "@/main"
+
 // 进入全屏
 export const enterFullscreen = () => {
-  const docElm = document.documentElement
+  const docElm = __v_store__.value!.root
   if (docElm.requestFullscreen) docElm.requestFullscreen() 
   else if (docElm.mozRequestFullScreen) docElm.mozRequestFullScreen() 
   else if (docElm.webkitRequestFullScreen) docElm.webkitRequestFullScreen()

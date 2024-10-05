@@ -99,6 +99,7 @@ import { pasteCustomClipboardString, pasteExcelClipboardString } from '@/utils/c
 import Button from '@/components/Button.vue'
 import Popover from '@/components/Popover.vue'
 import PopoverMenuItem from '@/components/PopoverMenuItem.vue'
+import { __v_store__ } from '@/main'
 
 const props = defineProps<{
   type: ChartType
@@ -164,7 +165,7 @@ const initData = () => {
 
   for (let rowIndex = 0; rowIndex < rowCount + 1; rowIndex++) {
     for (let colIndex = 0; colIndex < colCount + 1; colIndex++) {
-      const inputRef = document.querySelector(`#cell-${rowIndex}-${colIndex}`) as HTMLInputElement
+      const inputRef = __v_store__.value!.root.querySelector(`#cell-${rowIndex}-${colIndex}`) as HTMLInputElement
       if (!inputRef) continue
       inputRef.value = _data[rowIndex][colIndex] + ''
     }
@@ -180,7 +181,7 @@ const moveNextRow = () => {
   if (!focusCell.value) return
 
   const [rowIndex, colIndex] = focusCell.value
-  const inputRef = document.querySelector(`#cell-${rowIndex + 1}-${colIndex}`) as HTMLInputElement
+  const inputRef = __v_store__.value!.root.querySelector(`#cell-${rowIndex + 1}-${colIndex}`) as HTMLInputElement
   inputRef && inputRef.focus()
 }
 
@@ -190,10 +191,10 @@ const keyboardListener = (e: KeyboardEvent) => {
 }
 
 onMounted(() => {
-  document.addEventListener('keydown', keyboardListener)
+  __v_store__.value!.root.addEventListener('keydown', keyboardListener)
 })
 onUnmounted(() => {
-  document.removeEventListener('keydown', keyboardListener)
+  __v_store__.value!.root.removeEventListener('keydown', keyboardListener)
 })
 
 // 获取当前图表DOM中的数据，整理格式化后传递出去
@@ -207,13 +208,13 @@ const getTableData = () => {
   // 第一行为系列名，第一列为项目名，实际数据从第二行第二列开始
   for (let rowIndex = 1; rowIndex < row; rowIndex++) {
     let labelsItem = `类别${rowIndex}`
-    const labelInputRef = document.querySelector(`#cell-${rowIndex}-0`) as HTMLInputElement
+    const labelInputRef = __v_store__.value!.root.querySelector(`#cell-${rowIndex}-0`) as HTMLInputElement
     if (labelInputRef && labelInputRef.value) labelsItem = labelInputRef.value
     labels.push(labelsItem)
   }
   for (let colIndex = 1; colIndex < col; colIndex++) {
     let legendsItem = `系列${colIndex}`
-    const labelInputRef = document.querySelector(`#cell-0-${colIndex}`) as HTMLInputElement
+    const labelInputRef = __v_store__.value!.root.querySelector(`#cell-0-${colIndex}`) as HTMLInputElement
     if (labelInputRef && labelInputRef.value) legendsItem = labelInputRef.value
     legends.push(legendsItem)
   }
@@ -221,7 +222,7 @@ const getTableData = () => {
   for (let colIndex = 1; colIndex < col; colIndex++) {
     const seriesItem = []
     for (let rowIndex = 1; rowIndex < row; rowIndex++) {
-      const valueInputRef = document.querySelector(`#cell-${rowIndex}-${colIndex}`) as HTMLInputElement
+      const valueInputRef = __v_store__.value!.root.querySelector(`#cell-${rowIndex}-${colIndex}`) as HTMLInputElement
       let value = 0
       if (valueInputRef && valueInputRef.value && !!(+valueInputRef.value)) {
         value = +valueInputRef.value
@@ -258,7 +259,7 @@ const getTableData = () => {
 const clear = () => {
   for (let rowIndex = 1; rowIndex < 31; rowIndex++) {
     for (let colIndex = 1; colIndex < 7; colIndex++) {
-      const inputRef = document.querySelector(`#cell-${rowIndex}-${colIndex}`) as HTMLInputElement
+      const inputRef = __v_store__.value!.root.querySelector(`#cell-${rowIndex}-${colIndex}`) as HTMLInputElement
       if (!inputRef) continue
       inputRef.value = ''
     }
@@ -284,7 +285,7 @@ const handlePaste = (e: ClipboardEvent, rowIndex: number, colIndex: number) => {
         const maxCol = colIndex + excelData[0].length
         for (let i = rowIndex; i < maxRow; i++) {
           for (let j = colIndex; j < maxCol; j++) {
-            const inputRef = document.querySelector(`#cell-${i}-${j}`) as HTMLInputElement
+            const inputRef = __v_store__.value!.root.querySelector(`#cell-${i}-${j}`) as HTMLInputElement
             if (!inputRef) continue
             inputRef.value = excelData[i - rowIndex][j - colIndex]
           }
@@ -307,7 +308,7 @@ const changeSelectRange = (e: MouseEvent) => {
   const originWidth = selectedRange.value[0] * CELL_WIDTH
   const originHeight = selectedRange.value[1] * CELL_HEIGHT
 
-  document.onmousemove = e => {
+  __v_store__.value!.root.onmousemove = e => {
     if (!isMouseDown) return
 
     const currentPageX = e.pageX
@@ -322,10 +323,10 @@ const changeSelectRange = (e: MouseEvent) => {
     tempRangeSize.value = { width, height }
   }
 
-  document.onmouseup = e => {
+  __v_store__.value!.root.onmouseup = e => {
     isMouseDown = false
-    document.onmousemove = null
-    document.onmouseup = null
+    __v_store__.value!.root.onmousemove = null
+    __v_store__.value!.root.onmouseup = null
 
     const endPageX = e.pageX
     const endPageY = e.pageY

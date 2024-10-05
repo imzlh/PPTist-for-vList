@@ -72,6 +72,7 @@ import { useMainStore, useKeyboardStore } from '@/store'
 import { KEYS } from '@/configs/hotkey'
 import { type ImageClipedEmitData, OperateResizeHandlers } from '@/types/edit'
 import type { ImageClipDataRange, ImageElementClip } from '@/types/slides'
+import { __v_store__ } from '@/main'
 
 const props = defineProps<{
   src: string
@@ -214,10 +215,10 @@ const keyboardListener = (e: KeyboardEvent) => {
 
 onMounted(() => {
   initClipPosition()
-  document.addEventListener('keydown', keyboardListener)
+  __v_store__.value!.root.addEventListener('keydown', keyboardListener)
 })
 onUnmounted(() => {
-  document.removeEventListener('keydown', keyboardListener)
+  __v_store__.value!.root.removeEventListener('keydown', keyboardListener)
 })
 
 // 计算并更新裁剪区域范围数据
@@ -254,7 +255,7 @@ const moveClipRange = (e: MouseEvent) => {
   const bottomPosition = imgPosition.value
   const originPositopn = { ...topImgWrapperPosition.value }
 
-  document.onmousemove = e => {
+  __v_store__.value!.root.onmousemove = e => {
     if (!isMouseDown) return
 
     const currentPageX = e.pageX
@@ -290,10 +291,10 @@ const moveClipRange = (e: MouseEvent) => {
     }
   }
 
-  document.onmouseup = () => {
+  __v_store__.value!.root.onmouseup = () => {
     isMouseDown = false
-    document.onmousemove = null
-    document.onmouseup = null
+    __v_store__.value!.root.onmousemove = null
+    __v_store__.value!.root.onmouseup = null
 
     updateRange()
 
@@ -318,7 +319,7 @@ const scaleClipRange = (e: MouseEvent, type: OperateResizeHandlers) => {
 
   const aspectRatio = topImgWrapperPosition.value.width / topImgWrapperPosition.value.height
 
-  document.onmousemove = e => {
+  __v_store__.value!.root.onmousemove = e => {
     if (!isMouseDown) return
 
     const currentPageX = e.pageX
@@ -471,10 +472,10 @@ const scaleClipRange = (e: MouseEvent, type: OperateResizeHandlers) => {
     }
   }
 
-  document.onmouseup = () => {
+  __v_store__.value!.root.onmouseup = () => {
     isMouseDown = false
-    document.onmousemove = null
-    document.onmouseup = null
+    __v_store__.value!.root.onmousemove = null
+    __v_store__.value!.root.onmouseup = null
 
     updateRange()
 

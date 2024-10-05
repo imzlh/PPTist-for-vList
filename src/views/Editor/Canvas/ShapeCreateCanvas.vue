@@ -24,6 +24,7 @@ import { useKeyboardStore, useMainStore, useSlidesStore } from '@/store'
 import type { CreateCustomShapeData } from '@/types/edit'
 import { KEYS } from '@/configs/hotkey'
 import message from '@/utils/message'
+import { __v_store__ } from '@/main'
 
 const emit = defineEmits<{
   (event: 'created', payload: CreateCustomShapeData): void
@@ -137,7 +138,7 @@ const addPoint = (e: MouseEvent) => {
   if (closed.value) emit('created', getCreateData())
   else points.value.push([pageX, pageY])
 
-  document.onmouseup = () => {
+  __v_store__.value!.root.onmouseup = () => {
     isMouseDown.value = false
   }
 }
@@ -168,10 +169,10 @@ onMounted(() => {
   message.success('点击绘制任意形状，首尾闭合完成绘制，按 ESC 键或鼠标右键取消，按 ENTER 键提前完成', {
     duration: 0,
   })
-  document.addEventListener('keydown', keydownListener)
+  __v_store__.value!.root.addEventListener('keydown', keydownListener)
 })
 onUnmounted(() => {
-  document.removeEventListener('keydown', keydownListener)
+  __v_store__.value!.root.removeEventListener('keydown', keydownListener)
   message.closeAll()
 })
 </script>

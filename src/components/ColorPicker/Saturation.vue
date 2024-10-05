@@ -22,6 +22,7 @@
 import { computed, onUnmounted, ref } from 'vue'
 import tinycolor, { type ColorFormats } from 'tinycolor2'
 import { throttle, clamp } from 'lodash'
+import { __v_store__ } from '@/main';
 
 const props = defineProps<{
   value: ColorFormats.RGBA
@@ -53,8 +54,8 @@ const handleChange = (e: MouseEvent) => {
   
   const containerWidth = saturationRef.value.clientWidth
   const containerHeight = saturationRef.value.clientHeight
-  const xOffset = saturationRef.value.getBoundingClientRect().left + window.pageXOffset
-  const yOffset = saturationRef.value.getBoundingClientRect().top + window.pageYOffset
+  const xOffset = saturationRef.value.getBoundingClientRect().left + __v_store__.value!.root.scrollLeft
+  const yOffset = saturationRef.value.getBoundingClientRect().top + __v_store__.value!.root.scrollTop
   const left = clamp(e.pageX - xOffset, 0, containerWidth)
   const top = clamp(e.pageY - yOffset, 0, containerHeight)
   const saturation = left / containerWidth
@@ -69,13 +70,13 @@ const handleChange = (e: MouseEvent) => {
 }
 
 const unbindEventListeners = () => {
-  window.removeEventListener('mousemove', handleChange)
-  window.removeEventListener('mouseup', unbindEventListeners)
+  __v_store__.value!.root.removeEventListener('mousemove', handleChange)
+  __v_store__.value!.root.removeEventListener('mouseup', unbindEventListeners)
 }
 const handleMouseDown = (e: MouseEvent) => {
   handleChange(e)
-  window.addEventListener('mousemove', handleChange)
-  window.addEventListener('mouseup', unbindEventListeners)
+  __v_store__.value!.root.addEventListener('mousemove', handleChange)
+  __v_store__.value!.root.addEventListener('mouseup', unbindEventListeners)
 }
 onUnmounted(unbindEventListeners)
 </script>

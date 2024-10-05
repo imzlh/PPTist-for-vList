@@ -12,6 +12,7 @@ import useScreening from '@/hooks/useScreening'
 
 import BaseView from './BaseView.vue'
 import PresenterView from './PresenterView.vue'
+import { __v_store__ } from '@/main'
 
 const viewMode = ref<'base' | 'presenter'>('base')
 
@@ -27,8 +28,8 @@ const keydownListener = (e: KeyboardEvent) => {
   if (key === KEYS.ESC) exitScreening()
 }
 
-onMounted(() => document.addEventListener('keydown', keydownListener))
-onUnmounted(() => document.removeEventListener('keydown', keydownListener))
+onMounted(() => __v_store__.value!.root.addEventListener('keydown', keydownListener))
+onUnmounted(() => __v_store__.value!.root.removeEventListener('keydown', keydownListener))
 </script>
 
 <style lang="scss" scoped>

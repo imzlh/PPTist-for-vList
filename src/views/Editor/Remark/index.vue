@@ -18,6 +18,7 @@ import { storeToRefs } from 'pinia'
 import { useSlidesStore } from '@/store'
 
 import Editor from './Editor.vue'
+import { __v_store__ } from '@/main';
 
 const props = defineProps<{
   height: number
@@ -50,7 +51,7 @@ const resize = (e: MouseEvent) => {
   const startPageY = e.pageY
   const originHeight = props.height
 
-  document.onmousemove = e => {
+  __v_store__.value!.root.onmousemove = e => {
     if (!isMouseDown) return
 
     const currentPageY = e.pageY
@@ -64,10 +65,10 @@ const resize = (e: MouseEvent) => {
     emit('update:height', newHeight)
   }
 
-  document.onmouseup = () => {
+  __v_store__.value!.root.onmouseup = () => {
     isMouseDown = false
-    document.onmousemove = null
-    document.onmouseup = null
+    __v_store__.value!.root.onmousemove = null
+    __v_store__.value!.root.onmouseup = null
   }
 }
 </script>

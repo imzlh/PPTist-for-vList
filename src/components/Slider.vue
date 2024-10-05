@@ -17,6 +17,7 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
 import NP from 'number-precision'
+import { __v_store__ } from '@/main';
 
 const getBoundingClientRectViewLeft = (element: HTMLElement) => {
   return element.getBoundingClientRect().left
@@ -126,10 +127,10 @@ const updateRangeEnd = (e: MouseEvent | TouchEvent) => {
 
   emit('update:value', newValueArr)
 
-  document.removeEventListener('mousemove', updateRange)
-  document.removeEventListener('touchmove', updateRange)
-  document.removeEventListener('mouseup', updateRangeEnd)
-  document.removeEventListener('touchend', updateRangeEnd)
+  __v_store__.value!.root.removeEventListener('mousemove', updateRange)
+  __v_store__.value!.root.removeEventListener('touchmove', updateRange)
+  __v_store__.value!.root.removeEventListener('mouseup', updateRangeEnd)
+  __v_store__.value!.root.removeEventListener('touchend', updateRangeEnd)
 }
 
 // 单滑块模式
@@ -143,10 +144,10 @@ const updatePercentageEnd = (e: MouseEvent | TouchEvent) => {
 
   emit('update:value', newValue)
 
-  document.removeEventListener('mousemove', updatePercentage)
-  document.removeEventListener('touchmove', updatePercentage)
-  document.removeEventListener('mouseup', updatePercentageEnd)
-  document.removeEventListener('touchend', updatePercentageEnd)
+  __v_store__.value!.root.removeEventListener('mousemove', updatePercentage)
+  __v_store__.value!.root.removeEventListener('touchmove', updatePercentage)
+  __v_store__.value!.root.removeEventListener('mouseup', updatePercentageEnd)
+  __v_store__.value!.root.removeEventListener('touchend', updatePercentageEnd)
 }
 
 const handleMousedown = (e: MouseEvent | TouchEvent) => {
@@ -160,16 +161,16 @@ const handleMousedown = (e: MouseEvent | TouchEvent) => {
     }
     else handler.value = 'end'
 
-    document.addEventListener('mousemove', updateRange)
-    document.addEventListener('touchmove', updateRange)
-    document.addEventListener('mouseup', updateRangeEnd)
-    document.addEventListener('touchend', updateRangeEnd)
+    __v_store__.value!.root.addEventListener('mousemove', updateRange)
+    __v_store__.value!.root.addEventListener('touchmove', updateRange)
+    __v_store__.value!.root.addEventListener('mouseup', updateRangeEnd)
+    __v_store__.value!.root.addEventListener('touchend', updateRangeEnd)
   }
   else {
-    document.addEventListener('mousemove', updatePercentage)
-    document.addEventListener('touchmove', updatePercentage)
-    document.addEventListener('mouseup', updatePercentageEnd)
-    document.addEventListener('touchend', updatePercentageEnd)
+    __v_store__.value!.root.addEventListener('mousemove', updatePercentage)
+    __v_store__.value!.root.addEventListener('touchmove', updatePercentage)
+    __v_store__.value!.root.addEventListener('mouseup', updatePercentageEnd)
+    __v_store__.value!.root.addEventListener('touchend', updatePercentageEnd)
   }
 }
 </script>

@@ -30,6 +30,7 @@ import { computed, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMainStore, useKeyboardStore } from '@/store'
 import type { CreateElementSelectionData } from '@/types/edit'
+import { __v_store__ } from '@/main';
 
 const emit = defineEmits<{
   (event: 'created', payload: CreateElementSelectionData): void
@@ -62,7 +63,7 @@ const createSelection = (e: MouseEvent) => {
   const startPageY = e.pageY
   start.value = [startPageX, startPageY]
 
-  document.onmousemove = e => {
+  __v_store__.value!.root.onmousemove = e => {
     if (!creatingElement.value || !isMouseDown) return
 
     let currentPageX = e.pageX
@@ -100,9 +101,9 @@ const createSelection = (e: MouseEvent) => {
     end.value = [currentPageX, currentPageY]
   }
 
-  document.onmouseup = e => {
-    document.onmousemove = null
-    document.onmouseup = null
+  __v_store__.value!.root.onmouseup = e => {
+    __v_store__.value!.root.onmousemove = null
+    __v_store__.value!.root.onmouseup = null
 
     if (e.button === 2) {
       setTimeout(() => mainStore.setCreatingElement(null), 0)

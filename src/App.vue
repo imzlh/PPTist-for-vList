@@ -17,6 +17,7 @@ import { isPC } from './utils/common'
 import Editor from './views/Editor/index.vue'
 import Screen from './views/Screen/index.vue'
 import Mobile from './views/Mobile/index.vue'
+import { __v_store__ } from './main'
 
 const _isPC = isPC()
 
@@ -36,7 +37,7 @@ onMounted(async () => {
 })
 
 // 应用注销时向 localStorage 中记录下本次 indexedDB 的数据库ID，用于之后清除数据库
-window.addEventListener('unload', () => {
+__v_store__.value!.shadow.addEventListener('unload', () => {
   const discardedDB = localStorage.getItem(LOCALSTORAGE_KEY_DISCARDED_DB)
   const discardedDBList: string[] = discardedDB ? JSON.parse(discardedDB) : []
 

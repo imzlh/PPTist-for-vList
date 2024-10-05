@@ -80,6 +80,7 @@ import useHideCells from './useHideCells'
 import useSubThemeColor from './useSubThemeColor'
 
 import CustomTextarea from './CustomTextarea.vue'
+import { __v_store__ } from '@/main'
 
 const props = withDefaults(defineProps<{
   data: TableCell[][]
@@ -207,10 +208,10 @@ const handleCellMouseenter = (rowIndex: number, colIndex: number) => {
 }
 
 onMounted(() => {
-  document.addEventListener('mouseup', handleMouseup)
+  __v_store__.value!.root.addEventListener('mouseup', handleMouseup)
 })
 onUnmounted(() => {
-  document.removeEventListener('mouseup', handleMouseup)
+  __v_store__.value!.root.removeEventListener('mouseup', handleMouseup)
 })
 
 // 判断某位置是否为无效单元格（被合并掉的位置）
@@ -398,7 +399,7 @@ const handleMousedownColHandler = (e: MouseEvent, colIndex: number) => {
 
   const minWidth = 50
 
-  document.onmousemove = e => {
+  __v_store__.value!.root.onmousemove = e => {
     if (!isMouseDown) return
     
     const moveX = (e.pageX - startPageX) / canvasScale.value
@@ -406,10 +407,10 @@ const handleMousedownColHandler = (e: MouseEvent, colIndex: number) => {
 
     colSizeList.value[colIndex] = width
   }
-  document.onmouseup = () => {
+  __v_store__.value!.root.onmouseup = () => {
     isMouseDown = false
-    document.onmousemove = null
-    document.onmouseup = null
+    __v_store__.value!.root.onmousemove = null
+    __v_store__.value!.root.onmouseup = null
 
     emit('changeColWidths', colSizeList.value)
   }
@@ -431,7 +432,7 @@ const clearSelectedCellText = () => {
 
 const focusActiveCell = () => {
   nextTick(() => {
-    const textRef = document.querySelector('.cell-text.active') as HTMLInputElement
+    const textRef = __v_store__.value!.root.querySelector('.cell-text.active') as HTMLInputElement
     if (textRef) textRef.focus()
   })
 }
@@ -604,10 +605,10 @@ const keydownListener = (e: KeyboardEvent) => {
 }
 
 onMounted(() => {
-  document.addEventListener('keydown', keydownListener)
+  __v_store__.value!.root.addEventListener('keydown', keydownListener)
 })
 onUnmounted(() => {
-  document.removeEventListener('keydown', keydownListener)
+  __v_store__.value!.root.removeEventListener('keydown', keydownListener)
 })
 
 // 单元格文字输入时更新表格数据

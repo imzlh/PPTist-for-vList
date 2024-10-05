@@ -1,6 +1,7 @@
 import { ref, computed, onMounted, onUnmounted, watch, type Ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMainStore, useSlidesStore } from '@/store'
+import { __v_store__ } from '@/main'
 
 export default (canvasRef: Ref<HTMLElement | undefined>) => {
   const viewportLeft = ref(0)
@@ -98,7 +99,7 @@ export default (canvasRef: Ref<HTMLElement | undefined>) => {
     const originLeft = viewportLeft.value
     const originTop = viewportTop.value
 
-    document.onmousemove = e => {
+    __v_store__.value!.root.onmousemove = e => {
       if (!isMouseDown) return
 
       const currentPageX = e.pageX
@@ -108,10 +109,10 @@ export default (canvasRef: Ref<HTMLElement | undefined>) => {
       viewportTop.value = originTop + (currentPageY - startPageY)
     }
 
-    document.onmouseup = () => {
+    __v_store__.value!.root.onmouseup = () => {
       isMouseDown = false
-      document.onmousemove = null
-      document.onmouseup = null
+      __v_store__.value!.root.onmousemove = null
+      __v_store__.value!.root.onmouseup = null
 
       mainStore.setCanvasDragged(true)
     }

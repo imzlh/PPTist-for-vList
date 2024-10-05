@@ -5,6 +5,7 @@ import type { PPTElement } from '@/types/slides'
 import type { AlignmentLineProps } from '@/types/edit'
 import { getRectRotatedRange, uniqAlignLines, type AlignLine } from '@/utils/element'
 import useHistorySnapshot from '@/hooks/useHistorySnapshot'
+import { __v_store__ } from '@/main'
 
 export default (
   elementList: Ref<PPTElement[]>,
@@ -295,10 +296,10 @@ export default (
     const handleMouseup = (e: MouseEvent | TouchEvent) => {
       isMouseDown = false
       
-      document.ontouchmove = null
-      document.ontouchend = null
-      document.onmousemove = null
-      document.onmouseup = null
+      __v_store__.value!.root.ontouchmove = null
+      __v_store__.value!.root.ontouchend = null
+      __v_store__.value!.root.onmousemove = null
+      __v_store__.value!.root.onmouseup = null
 
       alignmentLines.value = []
 
@@ -312,12 +313,12 @@ export default (
     }
 
     if (isTouchEvent) {
-      document.ontouchmove = handleMousemove
-      document.ontouchend = handleMouseup
+      __v_store__.value!.root.ontouchmove = handleMousemove
+      __v_store__.value!.root.ontouchend = handleMouseup
     }
     else {
-      document.onmousemove = handleMousemove
-      document.onmouseup = handleMouseup
+      __v_store__.value!.root.onmousemove = handleMousemove
+      __v_store__.value!.root.onmouseup = handleMouseup
     }
   }
 

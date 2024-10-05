@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useMainStore, useSlidesStore } from '@/store'
 import type { PPTTableElement } from '@/types/slides'
 import message from '@/utils/message'
+import { __v_store__ } from '@/main'
 
 interface SearchTextResult {
   elType: 'text' | 'shape'
@@ -165,7 +166,7 @@ export default () => {
   }
   
   const clearMarks = () => {
-    const markNodes = document.querySelectorAll('.editable-element mark')
+    const markNodes = __v_store__.value!.root.querySelectorAll('.editable-element mark')
     for (const mark of markNodes) {
       setTimeout(() => {
         const parentNode = mark.parentNode!
@@ -185,7 +186,7 @@ export default () => {
         if (target.slideId !== currentSlide.value.id) continue
         if (lastTarget && lastTarget.elId === target.elId) continue
   
-        const node = document.querySelector(`#editable-element-${target.elId}`)
+        const node = __v_store__.value!.root.querySelector(`#editable-element-${target.elId}`)
         if (node) {
           if (target.elType === 'table') {
             const cells = node.querySelectorAll('.cell-text')
@@ -204,7 +205,7 @@ export default () => {
   }
   
   const setActiveMark = () => {
-    const markNodes = document.querySelectorAll('mark[data-index]')
+    const markNodes = __v_store__.value!.root.querySelectorAll('mark[data-index]')
     for (const node of markNodes) {
       setTimeout(() => {
         const index = (node as HTMLElement).dataset.index
@@ -257,9 +258,9 @@ export default () => {
     let targetElement = null
     if (target.elType === 'table') {
       const [i, j] = target.cellIndex
-      targetElement = document.querySelector(`#editable-element-${target.elId} .cell[data-cell-index="${i}_${j}"] .cell-text`)
+      targetElement = __v_store__.value!.root.querySelector(`#editable-element-${target.elId} .cell[data-cell-index="${i}_${j}"] .cell-text`)
     }
-    else targetElement = document.querySelector(`#editable-element-${target.elId} .ProseMirror`)
+    else targetElement = __v_store__.value!.root.querySelector(`#editable-element-${target.elId} .ProseMirror`)
     if (!targetElement) return
   
     const fakeElement = document.createElement('div')

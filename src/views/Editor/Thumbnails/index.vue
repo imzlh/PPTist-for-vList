@@ -85,6 +85,7 @@ import ThumbnailSlide from '@/views/components/ThumbnailSlide/index.vue'
 import LayoutPool from './LayoutPool.vue'
 import Popover from '@/components/Popover.vue'
 import Draggable from 'vuedraggable'
+import { __v_store__ } from '@/main'
 
 const mainStore = useMainStore()
 const slidesStore = useSlidesStore()
@@ -230,7 +231,7 @@ const editSection = (id: string) => {
   editingSectionId.value = id || 'default'
 
   nextTick(() => {
-    const inputRef = document.querySelector(`#section-title-input-${id || 'default'}`) as HTMLInputElement
+    const inputRef = __v_store__.value!.root.querySelector(`#section-title-input-${id || 'default'}`) as HTMLInputElement
     inputRef.focus()
   })
 }

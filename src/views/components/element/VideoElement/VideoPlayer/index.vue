@@ -118,6 +118,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import useMSE from './useMSE'
+import { __v_store__ } from '@/main';
 
 const props = withDefaults(defineProps<{
   width: number
@@ -273,17 +274,17 @@ const thumbUp = (e: MouseEvent | TouchEvent) => {
   videoRef.value.currentTime = time
   currentTime.value = time
 
-  document.removeEventListener('mousemove', thumbMove)
-  document.removeEventListener('touchmove', thumbMove)
-  document.removeEventListener('mouseup', thumbUp)
-  document.removeEventListener('touchend', thumbUp)
+  __v_store__.value!.root.removeEventListener('mousemove', thumbMove)
+  __v_store__.value!.root.removeEventListener('touchmove', thumbMove)
+  __v_store__.value!.root.removeEventListener('mouseup', thumbUp)
+  __v_store__.value!.root.removeEventListener('touchend', thumbUp)
 }
 
 const handleMousedownPlayBar = () => {
-  document.addEventListener('mousemove', thumbMove)
-  document.addEventListener('touchmove', thumbMove)
-  document.addEventListener('mouseup', thumbUp)
-  document.addEventListener('touchend', thumbUp)
+  __v_store__.value!.root.addEventListener('mousemove', thumbMove)
+  __v_store__.value!.root.addEventListener('touchmove', thumbMove)
+  __v_store__.value!.root.addEventListener('mouseup', thumbUp)
+  __v_store__.value!.root.addEventListener('touchend', thumbUp)
 }
 
 const volumeMove = (e: MouseEvent | TouchEvent) => {
@@ -294,17 +295,17 @@ const volumeMove = (e: MouseEvent | TouchEvent) => {
 }
 
 const volumeUp = () => {
-  document.removeEventListener('mousemove', volumeMove)
-  document.removeEventListener('touchmove', volumeMove)
-  document.removeEventListener('mouseup', volumeUp)
-  document.removeEventListener('touchend', volumeUp)
+  __v_store__.value!.root.removeEventListener('mousemove', volumeMove)
+  __v_store__.value!.root.removeEventListener('touchmove', volumeMove)
+  __v_store__.value!.root.removeEventListener('mouseup', volumeUp)
+  __v_store__.value!.root.removeEventListener('touchend', volumeUp)
 }
 
 const handleMousedownVolumeBar = () => {
-  document.addEventListener('mousemove', volumeMove)
-  document.addEventListener('touchmove', volumeMove)
-  document.addEventListener('mouseup', volumeUp)
-  document.addEventListener('touchend', volumeUp)
+  __v_store__.value!.root.addEventListener('mousemove', volumeMove)
+  __v_store__.value!.root.addEventListener('touchmove', volumeMove)
+  __v_store__.value!.root.addEventListener('mouseup', volumeUp)
+  __v_store__.value!.root.addEventListener('touchend', volumeUp)
 }
 
 const handleClickVolumeBar = (e: MouseEvent) => {

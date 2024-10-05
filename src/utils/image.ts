@@ -1,3 +1,5 @@
+import { __v_store__ } from "@/main"
+
 interface ImageSize {
   width: number
   height: number
@@ -12,7 +14,7 @@ export const getImageSize = (src: string): Promise<ImageSize> => {
     const img = document.createElement('img')
     img.src = src
     img.style.opacity = '0'
-    document.body.appendChild(img)
+    __v_store__.value!.root.appendChild(img)
 
     img.onload = () => {
       const imgWidth = img.clientWidth
@@ -21,7 +23,7 @@ export const getImageSize = (src: string): Promise<ImageSize> => {
       img.onload = null
       img.onerror = null
 
-      document.body.removeChild(img)
+      __v_store__.value!.root.removeChild(img)
 
       resolve({ width: imgWidth, height: imgHeight })
     }

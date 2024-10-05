@@ -5,6 +5,7 @@ import { useSlidesStore } from '@/store'
 import { KEYS } from '@/configs/hotkey'
 import { ANIMATION_CLASS_PREFIX } from '@/configs/animation'
 import message from '@/utils/message'
+import { __v_store__ } from '@/main'
 
 export default () => {
   const slidesStore = useSlidesStore()
@@ -34,7 +35,7 @@ export default () => {
 
     // 依次执行该位置中的全部动画
     for (const animation of animations) {
-      const elRef: HTMLElement | null = document.querySelector(`#screen-element-${animation.elId} [class^=base-element-]`)
+      const elRef: HTMLElement | null = __v_store__.value!.root.querySelector(`#screen-element-${animation.elId} [class^=base-element-]`)
       if (!elRef) {
         endAnimationCount += 1
         continue
@@ -84,7 +85,7 @@ export default () => {
     const { animations } = formatedAnimations.value[animationIndex.value]
 
     for (const animation of animations) {
-      const elRef: HTMLElement | null = document.querySelector(`#screen-element-${animation.elId} [class^=base-element-]`)
+      const elRef: HTMLElement | null = __v_store__.value!.root.querySelector(`#screen-element-${animation.elId} [class^=base-element-]`)
       if (!elRef) continue
       
       elRef.style.removeProperty('--animate-duration')
@@ -215,8 +216,8 @@ export default () => {
     ) execNext()
   }
 
-  onMounted(() => document.addEventListener('keydown', keydownListener))
-  onUnmounted(() => document.removeEventListener('keydown', keydownListener))
+  onMounted(() => __v_store__.value!.root.addEventListener('keydown', keydownListener))
+  onUnmounted(() => __v_store__.value!.root.removeEventListener('keydown', keydownListener))
 
   // 切换到上一张/上一张幻灯片（无视元素的入场动画）
   const turnPrevSlide = () => {

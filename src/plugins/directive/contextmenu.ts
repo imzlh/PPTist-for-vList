@@ -1,5 +1,6 @@
 import { type Directive, type DirectiveBinding, createVNode, render } from 'vue'
 import ContextmenuComponent from '@/components/Contextmenu/index.vue'
+import { __v_store__ } from '@/main'
 
 const CTX_CONTEXTMENU_HANDLER = 'CTX_CONTEXTMENU_HANDLER'
 
@@ -19,12 +20,12 @@ const contextmenuListener = (el: HTMLElement, event: MouseEvent, binding: Direct
   // 移除右键菜单并取消相关的事件监听
   const removeContextmenu = () => {
     if (container) {
-      document.body.removeChild(container)
+      __v_store__.value!.root.removeChild(container)
       container = null
     }
     el.classList.remove('contextmenu-active')
-    document.body.removeEventListener('scroll', removeContextmenu)  
-    window.removeEventListener('resize', removeContextmenu)
+    __v_store__.value!.root.removeEventListener('scroll', removeContextmenu)  
+    __v_store__.value!.root.removeEventListener('resize', removeContextmenu)
   }
 
   // 创建自定义菜单
@@ -37,14 +38,14 @@ const contextmenuListener = (el: HTMLElement, event: MouseEvent, binding: Direct
   container = document.createElement('div')
   const vm = createVNode(ContextmenuComponent, options, null)
   render(vm, container)
-  document.body.appendChild(container)
+  __v_store__.value!.root.appendChild(container)
 
   // 为目标节点添加菜单激活状态的className
   el.classList.add('contextmenu-active')
 
   // 页面变化时移除菜单
-  document.body.addEventListener('scroll', removeContextmenu)
-  window.addEventListener('resize', removeContextmenu)
+  __v_store__.value!.root.addEventListener('scroll', removeContextmenu)
+  __v_store__.value!.root.addEventListener('resize', removeContextmenu)
 }
 
 const ContextmenuDirective: Directive = {

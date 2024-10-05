@@ -1,3 +1,5 @@
+import { __v_store__ } from "@/main"
+
 interface PageSize {
   width: number
   height: number
@@ -13,7 +15,7 @@ const createIframe = () => {
   iframe.style.top = '0'
   iframe.style.border = '0'
 
-  document.body.appendChild(iframe)
+  __v_store__.value!.root.appendChild(iframe)
 
   return iframe
 }
@@ -22,7 +24,7 @@ const writeContent = (doc: Document, printNode: HTMLElement, size: PageSize) => 
   const docType = '<!DOCTYPE html>'
 
   let style = ''
-  const styleSheets = document.styleSheets
+  const styleSheets = __v_store__.value!.shadow.styleSheets
   if (styleSheets) {
     for (const styleSheet of styleSheets) {
       if (!styleSheet.cssRules) continue
@@ -79,7 +81,7 @@ export const print = (printNode: HTMLElement, size: PageSize) => {
   const handleAfterprint = () => {
     iframe.removeEventListener('load', handleLoadIframe)
     iframeContentWindow.removeEventListener('afterprint', handleAfterprint)
-    document.body.removeChild(iframe)
+    __v_store__.value!.root.removeChild(iframe)
   }
 
   iframe.addEventListener('load', handleLoadIframe)

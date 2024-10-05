@@ -141,6 +141,7 @@ import Draggable from 'vuedraggable'
 import NumberInput from '@/components/NumberInput.vue'
 import Select from '@/components/Select.vue'
 import Popover from '@/components/Popover.vue'
+import { __v_store__ } from '@/main'
 
 const animationEffects: { [key: string]: string } = {}
 for (const effect of ENTER_ANIMATIONS) {
@@ -240,14 +241,14 @@ const handleDragEnd = (eventData: { newIndex: number; oldIndex: number }) => {
 
 // 执行动画预览
 const runAnimation = (elId: string, effect: string, duration: number) => {
-  const elRef = document.querySelector(`#editable-element-${elId} [class^=editable-element-]`)
+  const elRef = __v_store__.value!.root.querySelector(`#editable-element-${elId} [class^=editable-element-]`)
   if (elRef) {
     const animationName = `${ANIMATION_CLASS_PREFIX}${effect}`
-    document.documentElement.style.setProperty('--animate-duration', `${duration}ms`)
+    __v_store__.value!.root.style.setProperty('--animate-duration', `${duration}ms`)
     elRef.classList.add(`${ANIMATION_CLASS_PREFIX}animated`, animationName)
 
     const handleAnimationEnd = () => {
-      document.documentElement.style.removeProperty('--animate-duration')
+      __v_store__.value!.root.style.removeProperty('--animate-duration')
       elRef.classList.remove(`${ANIMATION_CLASS_PREFIX}animated`, animationName)
     }
     elRef.addEventListener('animationend', handleAnimationEnd, { once: true })

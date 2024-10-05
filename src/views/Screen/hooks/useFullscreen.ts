@@ -1,6 +1,7 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import { isFullscreen, exitFullscreen } from '@/utils/fullscreen'
 import useScreening from '@/hooks/useScreening'
+import { __v_store__ } from '@/main'
 
 export default () => {
   const fullscreenState = ref(true)
@@ -17,12 +18,12 @@ export default () => {
 
   onMounted(() => {
     fullscreenState.value = isFullscreen()
-    document.addEventListener('fullscreenchange', handleFullscreenChange)
-    document.addEventListener('webkitfullscreenchange', handleFullscreenChange) // Safari 兼容
+    __v_store__.value!.root.addEventListener('fullscreenchange', handleFullscreenChange)
+    __v_store__.value!.root.addEventListener('webkitfullscreenchange', handleFullscreenChange) // Safari 兼容
   })
   onUnmounted(() => {
-    document.removeEventListener('fullscreenchange', handleFullscreenChange)
-    document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
+    __v_store__.value!.root.removeEventListener('fullscreenchange', handleFullscreenChange)
+    __v_store__.value!.root.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
   })
 
   const manualExitFullscreen = () => {

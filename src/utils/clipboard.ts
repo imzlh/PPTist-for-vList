@@ -1,5 +1,6 @@
 import Clipboard from 'clipboard'
 import { decrypt } from '@/utils/crypto'
+import { __v_store__ } from '@/main'
 
 /**
  * 复制文本到剪贴板
@@ -11,7 +12,7 @@ export const copyText = (text: string) => {
     const clipboard = new Clipboard(fakeElement, {
       text: () => text,
       action: () => 'copy',
-      container: document.body,
+      container: __v_store__.value!.root,
     })
     clipboard.on('success', e => {
       clipboard.destroy()
@@ -21,9 +22,9 @@ export const copyText = (text: string) => {
       clipboard.destroy()
       reject(e)
     })
-    document.body.appendChild(fakeElement)
+    __v_store__.value!.root.appendChild(fakeElement)
     fakeElement.click()
-    document.body.removeChild(fakeElement)
+    __v_store__.value!.root.removeChild(fakeElement)
   })
 }
 

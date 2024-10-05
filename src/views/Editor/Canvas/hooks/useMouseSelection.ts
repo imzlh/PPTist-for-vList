@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useMainStore } from '@/store'
 import type { PPTElement } from '@/types/slides'
 import { getElementRange } from '@/utils/element'
+import { __v_store__ } from '@/main'
 
 export default (elementList: Ref<PPTElement[]>, viewportRef: Ref<HTMLElement | undefined>) => {
   const mainStore = useMainStore()
@@ -42,7 +43,7 @@ export default (elementList: Ref<PPTElement[]>, viewportRef: Ref<HTMLElement | u
     mouseSelectionVisible.value = false
     mouseSelectionQuadrant.value = 4
 
-    document.onmousemove = e => {
+    __v_store__.value!.root.onmousemove = e => {
       if (!isMouseDown) return
 
       const currentPageX = e.pageX
@@ -74,9 +75,9 @@ export default (elementList: Ref<PPTElement[]>, viewportRef: Ref<HTMLElement | u
       mouseSelectionQuadrant.value = quadrant
     }
 
-    document.onmouseup = () => {
-      document.onmousemove = null
-      document.onmouseup = null
+    __v_store__.value!.root.onmouseup = () => {
+      __v_store__.value!.root.onmousemove = null
+      __v_store__.value!.root.onmouseup = null
       isMouseDown = false
 
       // 计算画布中的元素是否处在鼠标选择范围中，处在范围中的元素设置为被选中状态

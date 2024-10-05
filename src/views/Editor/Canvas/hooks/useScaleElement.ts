@@ -7,6 +7,7 @@ import { MIN_SIZE } from '@/configs/element'
 import { SHAPE_PATH_FORMULAS } from '@/configs/shapes'
 import { type AlignLine, uniqAlignLines } from '@/utils/element'
 import useHistorySnapshot from '@/hooks/useHistorySnapshot'
+import { __v_store__ } from '@/main'
 
 interface RotateElementData {
   left: number
@@ -430,10 +431,10 @@ export default (
     const handleMouseup = (e: MouseEvent | TouchEvent) => {
       isMouseDown = false
       
-      document.ontouchmove = null
-      document.ontouchend = null
-      document.onmousemove = null
-      document.onmouseup = null
+      __v_store__.value!.root.ontouchmove = null
+      __v_store__.value!.root.ontouchend = null
+      __v_store__.value!.root.onmousemove = null
+      __v_store__.value!.root.onmouseup = null
 
       alignmentLines.value = []
 
@@ -449,12 +450,12 @@ export default (
     }
 
     if (isTouchEvent) {
-      document.ontouchmove = handleMousemove
-      document.ontouchend = handleMouseup
+      __v_store__.value!.root.ontouchmove = handleMousemove
+      __v_store__.value!.root.ontouchend = handleMouseup
     }
     else {
-      document.onmousemove = handleMousemove
-      document.onmouseup = handleMouseup
+      __v_store__.value!.root.onmousemove = handleMousemove
+      __v_store__.value!.root.onmouseup = handleMouseup
     }
   }
 
@@ -472,7 +473,7 @@ export default (
 
     const originElementList: PPTElement[] = JSON.parse(JSON.stringify(elementList.value))
 
-    document.onmousemove = e => {
+    __v_store__.value!.root.onmousemove = e => {
       if (!isMouseDown) return
       
       const currentPageX = e.pageX
@@ -549,10 +550,10 @@ export default (
       })
     }
 
-    document.onmouseup = e => {
+    __v_store__.value!.root.onmouseup = e => {
       isMouseDown = false
-      document.onmousemove = null
-      document.onmouseup = null
+      __v_store__.value!.root.onmousemove = null
+      __v_store__.value!.root.onmouseup = null
 
       if (startPageX === e.pageX && startPageY === e.pageY) return
 

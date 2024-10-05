@@ -87,6 +87,7 @@ import Checkboard from './Checkboard.vue'
 import Hue from './Hue.vue'
 import Saturation from './Saturation.vue'
 import EditableInput from './EditableInput.vue'
+import { __v_store__ } from '@/main'
 
 const props = withDefaults(defineProps<{
   modelValue?: string
@@ -233,12 +234,12 @@ const browserEyeDropper = () => {
 
 // 基于 Canvas 的自定义取色吸管
 const customEyeDropper = () => {
-  const targetRef: HTMLElement | null = document.querySelector('.canvas')
+  const targetRef: HTMLElement | null = __v_store__.value!.root.querySelector('.canvas')
   if (!targetRef) return
 
   const maskRef = document.createElement('div')
   maskRef.style.cssText = 'position: fixed; top: 0; left: 0; bottom: 0; right: 0; z-index: 51599; cursor: wait;'
-  document.body.appendChild(maskRef)
+  __v_store__.value!.root.appendChild(maskRef)
 
   const colorBlockRef = document.createElement('div')
   colorBlockRef.style.cssText = 'position: absolute; top: -100px; left: -100px; width: 16px; height: 16px; border: 1px solid #000; z-index: 5159'
@@ -289,19 +290,19 @@ const customEyeDropper = () => {
 
         updateRecentColorsCache()
       }
-      document.body.removeChild(maskRef)
+      __v_store__.value!.root.removeChild(maskRef)
       
       canvasRef.removeEventListener('mousemove', handleMousemove)
       canvasRef.removeEventListener('mouseleave', handleMouseleave)
-      window.removeEventListener('mousedown', handleMousedown)
+      __v_store__.value!.root.removeEventListener('mousedown', handleMousedown)
     }
 
     canvasRef.addEventListener('mousemove', handleMousemove)
     canvasRef.addEventListener('mouseleave', handleMouseleave)
-    window.addEventListener('mousedown', handleMousedown)
+    __v_store__.value!.root.addEventListener('mousedown', handleMousedown)
   }).catch(() => {
     message.error('取色吸管初始化失败')
-    document.body.removeChild(maskRef)
+    __v_store__.value!.root.removeChild(maskRef)
   })
 }
 </script>

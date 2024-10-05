@@ -3,6 +3,7 @@ import { useSlidesStore } from '@/store'
 import type { PPTElement, PPTShapeElement } from '@/types/slides'
 import useHistorySnapshot from '@/hooks/useHistorySnapshot'
 import { SHAPE_PATH_FORMULAS } from '@/configs/shapes'
+import { __v_store__ } from '@/main'
 
 interface ShapePathData {
   baseSize: number,
@@ -94,10 +95,10 @@ export default (
     const handleMouseup = (e: MouseEvent | TouchEvent) => {
       isMouseDown = false
       
-      document.ontouchmove = null
-      document.ontouchend = null
-      document.onmousemove = null
-      document.onmouseup = null
+      __v_store__.value!.root.ontouchmove = null
+      __v_store__.value!.root.ontouchend = null
+      __v_store__.value!.root.onmousemove = null
+      __v_store__.value!.root.onmouseup = null
 
       const currentPageX = e instanceof MouseEvent ? e.pageX : e.changedTouches[0].pageX
       const currentPageY = e instanceof MouseEvent ? e.pageY : e.changedTouches[0].pageY
@@ -109,12 +110,12 @@ export default (
     }
 
     if (isTouchEvent) {
-      document.ontouchmove = handleMousemove
-      document.ontouchend = handleMouseup
+      __v_store__.value!.root.ontouchmove = handleMousemove
+      __v_store__.value!.root.ontouchend = handleMouseup
     }
     else {
-      document.onmousemove = handleMousemove
-      document.onmouseup = handleMouseup
+      __v_store__.value!.root.onmousemove = handleMousemove
+      __v_store__.value!.root.onmouseup = handleMouseup
     }
   }
 

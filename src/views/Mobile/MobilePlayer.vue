@@ -59,6 +59,7 @@ import type { Mode } from '@/types/mobile'
 
 import ThumbnailSlide from '@/views/components/ThumbnailSlide/index.vue'
 import MobileThumbnails from './MobileThumbnails.vue'
+import { __v_store__ } from '@/main'
 
 defineProps<{
   changeMode: (mode: Mode) => void
@@ -75,8 +76,8 @@ onMounted(() => {
   if (slideIndex.value !== 0) slidesStore.updateSlideIndex(0)
 
   playerSize.value = {
-    width: document.body.clientHeight,
-    height: document.body.clientWidth,
+    width: __v_store__.value!.root.clientHeight,
+    height: __v_store__.value!.root.clientWidth,
   }
 })
 

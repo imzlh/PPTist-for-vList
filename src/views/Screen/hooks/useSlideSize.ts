@@ -1,6 +1,7 @@
 import { onMounted, onUnmounted, ref, type Ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useSlidesStore } from '@/store'
+import { __v_store__ } from '@/main'
 
 export default (wrapRef?: Ref<HTMLElement | undefined>) => {
   const slidesStore = useSlidesStore()
@@ -11,7 +12,7 @@ export default (wrapRef?: Ref<HTMLElement | undefined>) => {
 
   // 计算和更新幻灯片内容的尺寸（按比例自适应屏幕）
   const setSlideContentSize = () => {
-    const slideWrapRef = wrapRef?.value || document.body
+    const slideWrapRef = wrapRef?.value || __v_store__.value!.root
     const winWidth = slideWrapRef.clientWidth
     const winHeight = slideWrapRef.clientHeight
     let width, height
@@ -34,10 +35,10 @@ export default (wrapRef?: Ref<HTMLElement | undefined>) => {
 
   onMounted(() => {
     setSlideContentSize()
-    window.addEventListener('resize', setSlideContentSize)
+    __v_store__.value!.root.addEventListener('resize', setSlideContentSize)
   })
   onUnmounted(() => {
-    window.removeEventListener('resize', setSlideContentSize)
+    __v_store__.value!.root.removeEventListener('resize', setSlideContentSize)
   })
 
   return {

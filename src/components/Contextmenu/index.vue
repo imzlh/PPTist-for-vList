@@ -25,6 +25,7 @@ import { computed } from 'vue'
 import type { ContextmenuItem, Axis } from './types'
 
 import MenuContent from './MenuContent.vue'
+import { __v_store__ } from '@/main';
 
 const props = defineProps<{
   axis: Axis
@@ -46,8 +47,8 @@ const style = computed(() => {
   const menuWidth = MENU_WIDTH
   const menuHeight = menuCount * MENU_HEIGHT + dividerCount * DIVIDER_HEIGHT + PADDING * 2
 
-  const screenWidth = document.body.clientWidth
-  const screenHeight = document.body.clientHeight
+  const screenWidth = __v_store__.value!.root.clientWidth
+  const screenHeight = __v_store__.value!.root.clientHeight
 
   return {
     left: screenWidth <= x + menuWidth ? x - menuWidth : x,

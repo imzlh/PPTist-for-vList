@@ -15,6 +15,7 @@ import useOrderElement from './useOrderElement'
 import useHistorySnapshot from './useHistorySnapshot'
 import useScreening from './useScreening'
 import useScaleCanvas from './useScaleCanvas'
+import { __v_store__ } from '@/main'
 
 export default () => {
   const mainStore = useMainStore()
@@ -302,13 +303,13 @@ export default () => {
   }
 
   onMounted(() => {
-    document.addEventListener('keydown', keydownListener)
-    document.addEventListener('keyup', keyupListener)
-    window.addEventListener('blur', keyupListener)
+    __v_store__.value!.root.addEventListener('keydown', keydownListener)
+    __v_store__.value!.root.addEventListener('keyup', keyupListener)
+    __v_store__.value!.root.addEventListener('blur', keyupListener)
   })
   onUnmounted(() => {
-    document.removeEventListener('keydown', keydownListener)
-    document.removeEventListener('keyup', keyupListener)
-    window.removeEventListener('blur', keyupListener)
+    __v_store__.value!.root.removeEventListener('keydown', keydownListener)
+    __v_store__.value!.root.removeEventListener('keyup', keyupListener)
+    __v_store__.value!.root.removeEventListener('blur', keyupListener)
   })
 }

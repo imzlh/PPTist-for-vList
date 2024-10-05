@@ -12,6 +12,7 @@ import { type CSSProperties, onMounted, onUnmounted, ref, watch, computed } from
 import tippy, { type Instance, type Placement } from 'tippy.js'
 
 import 'tippy.js/animations/scale.css'
+import { __v_store__ } from '@/main';
 
 const props = withDefaults(defineProps<{
   value?: boolean
@@ -59,7 +60,7 @@ onMounted(() => {
     trigger: props.trigger,
     placement: props.placement,
     interactive: true,
-    appendTo: props.appendTo || document.body,
+    appendTo: props.appendTo || __v_store__.value!.root,
     maxWidth: 'none',
     offset: [0, props.offset],
     duration: 200,

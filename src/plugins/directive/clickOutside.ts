@@ -1,3 +1,4 @@
+import { __v_store__ } from '@/main'
 import type { Directive, DirectiveBinding } from 'vue'
 
 const CTX_CLICK_OUTSIDE_HANDLER = 'CTX_CLICK_OUTSIDE_HANDLER'
@@ -20,13 +21,13 @@ const ClickOutsideDirective: Directive = {
   mounted(el: CustomHTMLElement, binding) {
     el[CTX_CLICK_OUTSIDE_HANDLER] = (event: MouseEvent) => clickListener(el, event, binding)
     setTimeout(() => {
-      document.addEventListener('click', el[CTX_CLICK_OUTSIDE_HANDLER]!)
+      __v_store__.value!.root.addEventListener('click', el[CTX_CLICK_OUTSIDE_HANDLER]!)
     }, 0)
   },
   
   unmounted(el: CustomHTMLElement) {
     if (el[CTX_CLICK_OUTSIDE_HANDLER]) {
-      document.removeEventListener('click', el[CTX_CLICK_OUTSIDE_HANDLER])
+      __v_store__.value!.root.removeEventListener('click', el[CTX_CLICK_OUTSIDE_HANDLER])
       delete el[CTX_CLICK_OUTSIDE_HANDLER]
     }
   },
