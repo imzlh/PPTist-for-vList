@@ -79,7 +79,7 @@ const onClickMask = () => {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 5000;
+  z-index: 50;
 }
 
 .modal {
@@ -97,7 +97,7 @@ const onClickMask = () => {
 }
 
 .modal-content {
-  z-index: 5001;
+  z-index: 51;
   padding: 20px;
   background: #fff;
   border-radius: $borderRadius;

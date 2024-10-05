@@ -50,7 +50,7 @@ const turnSlide = (index: number) => {
   top: 0;
   left: 0;
   background-color: #1a1a1a;
-  z-index: 99;
+  z-index: 9;
 }
 .return-button {
   height: 60px;

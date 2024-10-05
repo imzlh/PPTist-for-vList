@@ -29,7 +29,7 @@ const sizeStyle = computed(() => {
 <style lang="scss" scoped>
 .alignment-line {
   position: absolute;
-  z-index: 100;
+  z-index: 10;
 
   .line {
     width: 0;

@@ -283,6 +283,7 @@ export default () => {
         }
       }
       if (el.type === 'chart') {
+        // @ts-ignore
         el.themeColors = [colorMap[tinycolor(el.themeColors[0]).toRgbString()]] || el.themeColors
         el.textColor = theme.fontColor
       }

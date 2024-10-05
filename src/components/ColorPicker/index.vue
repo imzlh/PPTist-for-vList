@@ -237,11 +237,11 @@ const customEyeDropper = () => {
   if (!targetRef) return
 
   const maskRef = document.createElement('div')
-  maskRef.style.cssText = 'position: fixed; top: 0; left: 0; bottom: 0; right: 0; z-index: 9999; cursor: wait;'
+  maskRef.style.cssText = 'position: fixed; top: 0; left: 0; bottom: 0; right: 0; z-index: 51599; cursor: wait;'
   document.body.appendChild(maskRef)
 
   const colorBlockRef = document.createElement('div')
-  colorBlockRef.style.cssText = 'position: absolute; top: -100px; left: -100px; width: 16px; height: 16px; border: 1px solid #000; z-index: 999'
+  colorBlockRef.style.cssText = 'position: absolute; top: -100px; left: -100px; width: 16px; height: 16px; border: 1px solid #000; z-index: 5159'
   maskRef.appendChild(colorBlockRef)
 
   const { left, top, width, height } = targetRef.getBoundingClientRect()
@@ -352,7 +352,7 @@ const customEyeDropper = () => {
 .picker-current-color {
   @include absolute-0();
 
-  z-index: 2;
+  z-index: 53;
 }
 
 .picker-field {

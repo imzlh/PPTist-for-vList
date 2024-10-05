@@ -243,7 +243,7 @@ const handleMousedown = (e: MouseEvent | TouchEvent) => {
   outline: 2px solid $themeColor;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  z-index: 100;
+  z-index: 10;
 
   &:hover, &:active {
     &::before, &::after {

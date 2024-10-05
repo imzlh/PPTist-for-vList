@@ -50,7 +50,7 @@ const contentStyle = computed(() => {
   position: fixed;
   top: 0;
   bottom: 0;
-  z-index: 5000;
+  z-index: 50;
   background: #fff;
   display: flex;
   flex-direction: column;

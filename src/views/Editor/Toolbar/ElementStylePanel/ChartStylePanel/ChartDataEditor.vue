@@ -370,7 +370,7 @@ const changeSelectRange = (e: MouseEvent) => {
   position: absolute;
   top: 20px;
   left: 30px;
-  z-index: 100;
+  z-index: 10;
   user-select: none;
 }
 .temp-range {

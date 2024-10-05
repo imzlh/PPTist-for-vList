@@ -226,7 +226,7 @@ const updateFill = (color: string) => {
   width: 100%;
   height: 240px;
   position: absolute;
-  z-index: 99;
+  z-index: 9;
   bottom: 0;
   left: 0;
   background-color: #fff;

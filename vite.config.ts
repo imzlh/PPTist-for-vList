@@ -23,5 +23,17 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  build: {
+    lib: {
+      entry: './src/main.ts',
+      name: 'pptist'
+    },
+    rollupOptions: {
+      external: ['vue'],
+      output: {
+        esModule: true
+      }
+    }
   }
 })

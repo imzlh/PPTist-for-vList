@@ -1,16 +1,22 @@
 <script lang="ts" setup>
     const emit = defineEmits<{
-        change: [ data: File ]
+        change: [ data: FileList ]
     }>();
 
     (async function(){
-        const file = (await _G('fs.pick')({
+        const file = Promise.all((await _G('fs.pick')({
             src: '/',
             type: 'file'
-        }))[0];
-        const data = await (await fetch(file.url)).blob();
-        emit('change', new File([data], file.name, {
-            "lastModified": file.ctime
+        })).map(async file => {
+            const data = await (await fetch(file.url)).blob();
+            new File([data], file.name, {
+                "lastModified": file.ctime
+            });
         }));
+
+        // @ts-ignore
+        const flist = file as FileList;
+        flist.item = i => flist[i];
+        emit('change', flist);
     })();
 </script>

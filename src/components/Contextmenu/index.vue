@@ -70,11 +70,11 @@ const handleClickMenuItem = (item: ContextmenuItem) => {
   top: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 9998;
+  z-index: 58;
 }
 .contextmenu {
   position: fixed;
-  z-index: 9999;
+  z-index: 59;
   user-select: none;
 }
 </style>

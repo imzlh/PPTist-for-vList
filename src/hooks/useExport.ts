@@ -841,12 +841,13 @@ export default () => {
       }
     }
 
-    setTimeout(() => {
-      pptx.writeFile({ fileName: `${title.value}.pptx` }).then(() => exporting.value = false).catch(() => {
+    pptx.write({ compression: true, outputType: 'blob' })
+      .then(data => _G('fs.write')(__v_store__.value!.file.path, data as Blob))
+      .then(() => exporting.value = false)
+      .catch(() => {
         exporting.value = false
         message.error('导出失败')
       })
-    }, 200)
   }
 
   return {

@@ -73,7 +73,7 @@ const cannotRotate = computed(() => ['chart', 'video', 'audio'].includes(props.e
 <style lang="scss" scoped>
 .mobile-operate {
   position: absolute;
-  z-index: 100;
+  z-index: 10;
   user-select: none;
 }
 </style>

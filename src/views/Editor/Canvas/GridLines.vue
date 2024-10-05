@@ -53,7 +53,7 @@ const path = computed(() => {
   width: 100%;
   height: 100%;
   overflow: visible;
-  z-index: 999;
+  z-index: 59;
   pointer-events: none;
 
   @include absolute-0();

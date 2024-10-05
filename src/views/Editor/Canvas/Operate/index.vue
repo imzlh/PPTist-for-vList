@@ -107,7 +107,7 @@ const height = computed(() => 'height' in props.elementInfo ? props.elementInfo.
 <style lang="scss" scoped>
 .operate {
   position: absolute;
-  z-index: 100;
+  z-index: 10;
   user-select: none;
 
   &.multi-select {

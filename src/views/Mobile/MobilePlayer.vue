@@ -206,7 +206,7 @@ const touchEndListener = (e: TouchEvent) => {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 99;
+  z-index: 9;
   background-color: rgba($color: #1d1d1d, $alpha: .7);
   text-align: right;
   font-size: 13px;
@@ -222,7 +222,7 @@ const touchEndListener = (e: TouchEvent) => {
   position: absolute;
   bottom: 0;
   left: 0;
-  z-index: 99;
+  z-index: 9;
   background-color: rgba($color: #1d1d1d, $alpha: .7);
   overflow: auto !important;
   animation: slideInUp .15s;

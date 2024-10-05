@@ -167,7 +167,7 @@ const startResize = (e: MouseEvent) => {
   border-radius: $borderRadius;
   display: flex;
   flex-direction: column;
-  z-index: 999;
+  z-index: 59;
 }
 .resizer {
   width: 10px;

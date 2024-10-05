@@ -77,6 +77,6 @@ const disableResize = computed(() => {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 101;
+  z-index: 12;
 }
 </style>
