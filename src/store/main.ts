@@ -2,7 +2,6 @@ import { customAlphabet } from 'nanoid'
 import { defineStore } from 'pinia'
 import { ToolbarStates } from '@/types/toolbar'
 import type { CreatingElement, ShapeFormatPainter, TextFormatPainter } from '@/types/edit'
-import type { DialogForExportTypes } from '@/types/export'
 import { type TextAttrs, defaultRichTextAttrs } from '@/utils/prosemirror/utils'
 import { SYS_FONTS } from '@/configs/font'
 import { isSupportFont } from '@/utils/font'
@@ -31,7 +30,6 @@ export interface MainState {
   richTextAttrs: TextAttrs
   selectedTableCells: string[]
   selectedSlidesIndex: number[]
-  dialogForExport: DialogForExportTypes
   databaseId: string
   textFormatPainter: TextFormatPainter | null
   shapeFormatPainter: ShapeFormatPainter | null
@@ -66,7 +64,6 @@ export const useMainStore = defineStore('main', {
     selectedTableCells: [], // 选中的表格单元格
     isScaling: false, // 正在进行元素缩放
     selectedSlidesIndex: [], // 当前被选中的页面索引集合
-    dialogForExport: '', // 导出面板
     databaseId, // 标识当前应用的indexedDB数据库ID
     textFormatPainter: null, // 文字格式刷
     shapeFormatPainter: null, // 形状格式刷
@@ -177,10 +174,6 @@ export const useMainStore = defineStore('main', {
     
     updateSelectedSlidesIndex(selectedSlidesIndex: number[]) {
       this.selectedSlidesIndex = selectedSlidesIndex
-    },
-
-    setDialogForExport(type: DialogForExportTypes) {
-      this.dialogForExport = type
     },
 
     setTextFormatPainter(textFormatPainter: TextFormatPainter | null) {

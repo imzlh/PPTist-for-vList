@@ -1,7 +1,6 @@
 import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { trim } from 'lodash'
-import { saveAs } from 'file-saver'
 import pptxgen from 'pptxgenjs'
 import tinycolor from 'tinycolor2'
 import { toPng, toJpeg } from 'html-to-image'
@@ -13,6 +12,17 @@ import { type SvgPoints, toPoints } from '@/utils/svgPathParser'
 import { encrypt } from '@/utils/crypto'
 import { svg2Base64 } from '@/utils/svg2Base64'
 import message from '@/utils/message'
+import { __v_store__ } from '@/main'
+
+async function saveAs(blob: Blob|string, file: string){
+  if(__v_store__.value!.file.name != file && !await new Promise(rs => _G('ui.alert')({
+    "type": "confirm",
+    "message": "以不同的文件名保存吗？",
+    "callback": rs
+  }))) return;
+  if(typeof blob == 'string') blob = await (await fetch(blob)).blob();
+  return _G('fs.write')(__v_store__.value!.dir, blob, true);
+}
 
 interface ExportImageConfig {
   quality: number

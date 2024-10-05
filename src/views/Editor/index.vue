@@ -19,14 +19,6 @@
   <SelectPanel v-if="showSelectPanel" />
   <SearchPanel v-if="showSearchPanel" />
   <NotesPanel v-if="showNotesPanel" />
-
-  <Modal
-    :visible="!!dialogForExport" 
-    :width="680"
-    @closed="closeExportDialog()"
-  >
-    <ExportDialog />
-  </Modal>
 </template>
 
 <script lang="ts" setup>
@@ -42,15 +34,13 @@ import CanvasTool from './CanvasTool/index.vue'
 import Thumbnails from './Thumbnails/index.vue'
 import Toolbar from './Toolbar/index.vue'
 import Remark from './Remark/index.vue'
-import ExportDialog from './ExportDialog/index.vue'
 import SelectPanel from './SelectPanel.vue'
 import SearchPanel from './SearchPanel.vue'
 import NotesPanel from './NotesPanel.vue'
 import Modal from '@/components/Modal.vue'
 
 const mainStore = useMainStore()
-const { dialogForExport, showSelectPanel, showSearchPanel, showNotesPanel } = storeToRefs(mainStore)
-const closeExportDialog = () => mainStore.setDialogForExport('')
+const { showSelectPanel, showSearchPanel, showNotesPanel } = storeToRefs(mainStore)
 
 const remarkHeight = ref(40)
 
